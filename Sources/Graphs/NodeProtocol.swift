@@ -1,4 +1,4 @@
-public protocol NodeProtocol: Identifiable {
+public protocol NodeProtocol: AnyObject, Identifiable {
 
     var mass: Double { get }
 
