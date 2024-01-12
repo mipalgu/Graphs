@@ -1,4 +1,4 @@
-public struct Point2D: Hashable, Codable, Sendable, ExpressibleByIntegerLiteral {
+public struct Point2D: Hashable, Codable, Sendable, ExpressibleByIntegerLiteral, ExpressibleByFloatLiteral {
 
     public static func + (lhs: Point2D, rhs: Point2D) -> Point2D {
         Point2D(x: lhs.x + rhs.x, y: lhs.y + rhs.y)
@@ -94,6 +94,10 @@ public struct Point2D: Hashable, Codable, Sendable, ExpressibleByIntegerLiteral 
     }
 
     public init(integerLiteral value: IntegerLiteralType) {
+        self.init(Double(value))
+    }
+
+    public init(floatLiteral value: FloatLiteralType) {
         self.init(Double(value))
     }
 

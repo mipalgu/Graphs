@@ -1,5 +1,5 @@
 public final class Node: NodeProtocol {
-    
+
     public let mass: Double
 
     public var force: Point2D

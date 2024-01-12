@@ -22,9 +22,7 @@ public protocol GraphProtocol {
 
 public extension GraphProtocol {
 
-    mutating func layout() {
-        let gravityConstant = Point2D(-1.1)
-        let forceConstant = Point2D(1000)
+    mutating func simulate(gravityConstant: Point2D = -1.1, forceConstant: Point2D = 1000) {
         let inverseForceConstant = Point2D(1.0) / forceConstant
         for var node in nodes {
             node.force = node.point * gravityConstant
@@ -58,6 +56,12 @@ public extension GraphProtocol {
             rhs.force -= inverseForceConstant * diff
             replace(node: lhs.id, with: lhs)
             replace(node: rhs.id, with: rhs)
+        }
+    }
+
+    mutating func layout(times: Int = 1, gravityConstant: Point2D = -1.1, forceConstant: Point2D = 1000) {
+        for _ in 0..<times {
+            simulate(gravityConstant: gravityConstant, forceConstant: forceConstant)
         }
     }
 
