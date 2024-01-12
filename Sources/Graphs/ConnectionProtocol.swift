@@ -1,4 +1,4 @@
-public protocol ConnectionProtocol: AnyObject {
+public protocol ConnectionProtocol {
 
     associatedtype Node: NodeProtocol
 

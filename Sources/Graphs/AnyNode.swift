@@ -49,6 +49,7 @@ public final class AnyNode<ID: Hashable>: NodeProtocol {
     }
 
     public init<Base: NodeProtocol>(_ base: Base) where Base.ID == ID {
+        var base = base
         self._id = { base.id }
         self._mass = { base.mass }
         self._force = { base.force }
