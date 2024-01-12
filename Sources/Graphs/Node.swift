@@ -1,4 +1,4 @@
-public final class Node: NodeProtocol {
+public final class Node: NodeProtocol, CustomStringConvertible {
 
     public let mass: Double
 
@@ -8,7 +8,11 @@ public final class Node: NodeProtocol {
 
     public var y: Int
 
-    public init(mass: Double, force: Point2D, x: Int = 0, y: Int = 0) {
+    public var description: String {
+        "Node(mass: \(mass), force: \(force), x: \(x), y: \(y))"
+    }
+
+    public init(mass: Double, force: Point2D = 0, x: Int = 0, y: Int = 0) {
         self.mass = mass
         self.force = force
         self.x = x

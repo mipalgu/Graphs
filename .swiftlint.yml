@@ -146,6 +146,8 @@ identifier_name:
   excluded: # excluded via string array
     - _id
     - id
+    - x
+    - y
     - URL
     - GlobalAPIKey
     - job

@@ -23,7 +23,7 @@ public protocol GraphProtocol {
 public extension GraphProtocol {
 
     mutating func simulate(gravityConstant: Point2D = -1.1, forceConstant: Point2D = 1000) {
-        let inverseForceConstant = Point2D(1.0) / forceConstant
+        //let inverseForceConstant = Point2D(1.0) / forceConstant
         for var node in nodes {
             node.force = node.point * gravityConstant
             replace(node: node.id, with: node)
@@ -36,7 +36,7 @@ public extension GraphProtocol {
             for var other in otherNodes where other.id != node.id {
                 let diff = other.point - point
                 let mag = diff.magnitude
-                let relativeForce = (diff / (mag * mag)) * forceConstant
+                let relativeForce: Point2D = mag == 0 ? forceConstant : (diff / (mag * mag)) * forceConstant
                 node.force += relativeForce * -1
                 other.force += relativeForce
                 replace(node: other.id, with: other)
@@ -52,10 +52,14 @@ public extension GraphProtocol {
             if abs(diff) < 0.1 {
                 continue
             }
-            lhs.force += inverseForceConstant * diff
-            rhs.force -= inverseForceConstant * diff
+            lhs.force -= distance
+            rhs.force += distance
             replace(node: lhs.id, with: lhs)
             replace(node: rhs.id, with: rhs)
+        }
+        for var node in nodes {
+            node.point += node.force / node.mass
+            replace(node: node.id, with: node)
         }
     }
 
