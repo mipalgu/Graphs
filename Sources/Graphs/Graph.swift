@@ -1,13 +1,9 @@
 public struct InMemoryGraph<Node: NodeProtocol, Connection: ConnectionProtocol>: GraphProtocol
 where Connection.Node == Node {
 
-    public typealias NodeCollection = Dictionary<Node.ID, Node>.Values
-
-    public typealias ConnectionCollection = [Connection]
-
     public private(set) var nodesLookup: [Node.ID: Node]
 
-    public var nodes: NodeCollection {
+    public var nodes: Dictionary<Node.ID, Node>.Values {
         nodesLookup.values
     }
 
@@ -22,7 +18,7 @@ where Connection.Node == Node {
         nodesLookup[id]
     }
 
-    public func nodes(after node: Node.ID) -> NodeCollection.SubSequence? {
+    public func nodes(after node: Node.ID) -> Dictionary<Node.ID, Node>.Values.SubSequence? {
         guard let startingIndex = nodesLookup.index(forKey: node) else {
             return nil
         }
