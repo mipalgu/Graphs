@@ -14,7 +14,7 @@ public protocol GraphProtocol: AnyObject {
 
     func node(_: Node.ID) -> Node?
 
-    func nodes(after node: Node.ID) -> NodeCollection.SubSequence
+    func nodes(after node: Node.ID) -> NodeCollection.SubSequence?
 
 }
 
@@ -29,7 +29,10 @@ public extension GraphProtocol {
         }
         for node in nodes {
             let point = node.point
-            for other in nodes(after: node.id) where other.id != node.id {
+            guard let otherNodes = nodes(after: node.id) else {
+                continue
+            }
+            for other in otherNodes where other.id != node.id {
                 let diff = other.point - point
                 let mag = diff.magnitude
                 let relativeForce = (diff / (mag * mag)) * forceConstant
