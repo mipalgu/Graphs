@@ -1,0 +1,30 @@
+name: Generate Documentation
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  docs:
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: swift-actions/setup-swift@v1
+        with:
+            swift-version: "5.8"
+
+      - name: Clone Repo 
+        uses: actions/checkout@v2
+
+      - name: Generate Documentation
+        uses: mipalgu/swiftpm-generate-documentation@main
+        with:
+            swift-version: "5.8"
+
+      - name: Pages Deployment
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          force_orphan: true
