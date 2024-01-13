@@ -2,8 +2,11 @@ import XCTest
 
 @testable import Graphs
 
+/// Provides a common set of tests for all types that conform to
+/// `NodeProtocol`.
 class NodeProtocolTestCase<Node: NodeProtocol>: XCTestCase {
 
+    /// Test all getters and setters defined by the protocol.
     func performGettersAndSettersTest(node: Node, mass: Double) {
         XCTAssertEqual(node.mass, mass)
         let force = Point2D(x: node.force.x + 1, y: node.force.y + 1)
@@ -18,6 +21,7 @@ class NodeProtocolTestCase<Node: NodeProtocol>: XCTestCase {
         XCTAssertEqual(node.y, y)
     }
 
+    /// Test that the node can be converted to/from a point.
     func performPointTest(node: Node, other: Node) {
         var point = node.point
         XCTAssertEqual(point.x, Double(node.x))
@@ -30,6 +34,7 @@ class NodeProtocolTestCase<Node: NodeProtocol>: XCTestCase {
         XCTAssertEqual(other.y, -2)
     }
 
+    /// Test that the distance between two nodes is calculated correctly.
     func performDistanceTest(node: Node, other: Node) {
         var other = other
         other.x = node.x + 3
