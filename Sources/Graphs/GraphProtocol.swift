@@ -77,7 +77,7 @@ public extension GraphProtocol {
             for var other in otherNodes where other.id != node.id {
                 let diff = other.point - point
                 let mag = diff.magnitude
-                let relativeForce: Point2D = mag == 0 ? forceConstant : (diff / (mag * mag)) * forceConstant
+                let relativeForce = mag == 0 ? forceConstant : (diff / Point2D(mag * mag)) * forceConstant
                 node.force += relativeForce * -1
                 other.force += relativeForce
                 replace(node: other.id, with: other)
@@ -99,7 +99,7 @@ public extension GraphProtocol {
             replace(node: rhs.id, with: rhs)
         }
         for var node in nodes {
-            node.point += node.force / node.mass
+            node.point += node.force / Point2D(node.mass)
             replace(node: node.id, with: node)
         }
     }

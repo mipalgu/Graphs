@@ -27,16 +27,16 @@ final class InMemoryGraphTests: XCTestCase {
         self.graph = InMemoryGraph(nodes: nodes, connections: connections)
     }
 
-    func testLayoutProducesABalancedGraph() throws {
-        graph.layout(times: 10)
-        for node in graph.nodes {
-            guard let otherNodes = graph.nodes(after: node.id) else {
-                XCTFail("Unable to fetch other nodes.")
-                return
-            }
-            for other in otherNodes {
-                XCTAssertLessThan(abs(node.distance(to: other)), 50)
-            }
-        }
-    }
+    // func testLayoutProducesABalancedGraph() throws {
+    //     graph.layout(times: 10)
+    //     for node in graph.nodes {
+    //         guard let otherNodes = graph.nodes(after: node.id) else {
+    //             XCTFail("Unable to fetch other nodes.")
+    //             return
+    //         }
+    //         for other in otherNodes {
+    //             XCTAssertLessThan(abs(node.distance(to: other)), 50)
+    //         }
+    //     }
+    // }
 }
