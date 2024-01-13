@@ -56,7 +56,7 @@ where Connection.Node == Node {
             return nil
         }
         let nodes = nodes
-        return nodes[startingIndex..<nodes.endIndex]
+        return nodes[startingIndex.advanced(by: 1)..<nodes.endIndex]
     }
 
     /// Replace a node in the graph with a new node.
@@ -67,10 +67,7 @@ where Connection.Node == Node {
     /// - Parameter id: The id of the node to replace.
     ///
     /// - Parameter node: The new node to replace the old node.
-    ///
-    /// - Precondition: The node's id must match the id of the node to replace.
     public mutating func replace(node id: Node.ID, with node: Node) {
-        precondition(id == node.id)
         guard let index = nodesLookup.index(forKey: id) else {
             return
         }

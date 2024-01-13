@@ -2,7 +2,7 @@ import XCTest
 
 @testable import Graphs
 
-final class InMemoryGraphTests: XCTestCase {
+final class InMemoryGraphTests: GraphProtocolTestCase<InMemoryGraph<Node, Connection<Node>>> {
 
     var graph: InMemoryGraph<Node, Connection<Node>>!
 
@@ -27,16 +27,36 @@ final class InMemoryGraphTests: XCTestCase {
         self.graph = InMemoryGraph(nodes: nodes, connections: connections)
     }
 
-    // func testLayoutProducesABalancedGraph() throws {
-    //     graph.layout(times: 10)
-    //     for node in graph.nodes {
-    //         guard let otherNodes = graph.nodes(after: node.id) else {
-    //             XCTFail("Unable to fetch other nodes.")
-    //             return
-    //         }
-    //         for other in otherNodes {
-    //             XCTAssertLessThan(abs(node.distance(to: other)), 50)
-    //         }
-    //     }
-    // }
+    func testNodeLookup() {
+        performNodeLookupTest(graph: graph) {
+            unsafeBitCast(UInt(bitPattern: $0) &+ 1, to: ObjectIdentifier.self)
+        }
+    }
+
+    func testNodesAfterWithSingleNode() {
+        let node = Node(mass: 10)
+        let smallGraph = InMemoryGraph<Node, Connection<Node>>(nodes: [node.id: node], connections: [])
+        performNodesAfterWithSingleNodeTest(graph: smallGraph)
+    }
+
+    func testNodesAfter() {
+        performNodesAfterTest(graph: graph)
+    }
+
+    func testNodesAfterWithMissingID() {
+        performNodesAfterWithMissingID(graph: graph) {
+            unsafeBitCast(UInt(bitPattern: $0) &+ 1, to: ObjectIdentifier.self)
+        }
+    }
+
+    func testReplace() {
+        let missing = Node(mass: 10)
+        performReplaceTest(graph: &graph, missing: missing) {
+            unsafeBitCast(UInt(bitPattern: $0) &+ 1, to: ObjectIdentifier.self)
+        }
+    }
+
+    func testLayoutProducesABalancedGraph() {
+        performLayoutProducesABalancedGraphTest(graph: &graph)
+    }
 }

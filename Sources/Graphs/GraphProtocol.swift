@@ -49,6 +49,10 @@ public protocol GraphProtocol {
     ///
     /// This should place the new node within the same position as the node
     /// that is being replaced.
+    ///
+    /// - Parameter id: The id of the node to replace.
+    ///
+    /// - Parameter node: The new node to replace the old node.
     mutating func replace(node id: Node.ID, with node: Node)
 
 }
