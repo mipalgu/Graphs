@@ -39,8 +39,22 @@ public extension NodeProtocol {
         get {
             Point2D(node: self)
         } set {
-            self.x = Int(newValue.x.rounded(.toNearestOrAwayFromZero))
-            self.y = Int(newValue.y.rounded(.toNearestOrAwayFromZero))
+            let newXValue = newValue.x.rounded(.toNearestOrAwayFromZero)
+            if newXValue < Double(Int.min) {
+                self.x = Int.min
+            } else if newXValue > Double(Int.max) {
+                self.x = Int.max
+            } else {
+                self.x = Int(newXValue)
+            }
+            let newYValue = newValue.y.rounded(.toNearestOrAwayFromZero)
+            if newYValue < Double(Int.min) {
+                self.y = Int.min
+            } else if newYValue > Double(Int.max) {
+                self.y = Int.max
+            } else {
+                self.y = Int(newYValue)
+            }
         }
     }
 
